@@ -1,0 +1,10 @@
+{
+  "name": "My Telegram Business Bot",
+  "username": "",
+  "token": "",
+  "language": "bn",
+  "timezone": "Asia/Dhaka",
+  "welcome_enabled": true,
+  "menu_enabled": true,
+  "version": "1.0"
+}
