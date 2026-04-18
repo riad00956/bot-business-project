@@ -1,0 +1,13 @@
+{
+  "welcome": "🏡 Welcome to the Main Menu",
+  "join_required": "🚫 Access Restricted — Join required channels first.",
+  "referral_received": "🎉 New Referral Received! You invited a new user.",
+  "withdraw_success": "✅ Withdraw Submitted! Agent will deliver your file.",
+  "withdraw_locked": "🔒 Withdraw Locked — Need more referrals.",
+  "delivery_complete": "🎉 Script Delivered! Your file has been sent successfully.",
+  "delivery_cancelled": "❌ Delivery Cancelled — Please contact support.",
+  "access_denied": "❌ Access Denied",
+  "new_user_joined": "🔔 New User Joined!",
+  "new_withdraw_request": "📦 New Withdraw Request",
+  "file_claimed": "✅ New File Successfully Claimed!"
+}
