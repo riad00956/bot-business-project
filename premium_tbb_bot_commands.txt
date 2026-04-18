@@ -1,0 +1,653 @@
+╔══════════════════════════════════════════════════════════════════╗
+  ║        PREMIUM TBB BOT — সম্পূর্ণ কমান্ড গাইড                 ║
+  ║         Referral-to-Earn | Force Join | Key System               ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ⚙️  প্রথমে এই ডিফল্ট ভ্যালু পরিবর্তন করুন (Command 1 ও 2 তে)
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    admin_id         = আপনার Telegram ID (যেমন: 123456789)
+    agent_id         = Agent-এর Telegram ID
+    agent_username   = @agent-এর-username
+    support_username = @support-এর-username
+    withdraw_channel = @channel-name (withdraw notify channel)
+    activity_channel = @channel-name (activity log channel)
+    force_channels   = ["@আপনার_চ্যানেল"]
+    ref_target       = 5 (কতটি referral-এ file পাবে)
+    file_name        = "আপনার ফাইলের নাম"
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📋  কমান্ড যোগ করার নিয়ম
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Bot Business → আপনার বট → Commands → Add Command
+    প্রতিটি সেকশন আলাদা আলাদা command হিসেবে যোগ করুন।
+    Command type:
+      /start, /admin  → Slash Command
+      config, *       → Regular Command (No slash)
+      *               → ⚠️ সবার শেষে যোগ করুন!
+
+    Parse Mode: সব command-এ Markdown সিলেক্ট করুন
+    Run Once Only: NO রাখুন
+
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 1: Config Setup
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : config
+Type          : Regular Command
+On Message    : config
+Description   : Bot configuration — সব settings এখানে করুন
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var admin_id = 8373846582;          // ← আপনার Telegram ID দিন
+  var agent_id = 8373846582;          // ← Agent ID দিন
+  var agent_username = "@agent_username";
+  var support_username = "@support_username";
+  var withdraw_channel = "@withdraw_channel";
+  var activity_channel = "@activity_channel";
+  var file_name = "Neon Hub WebApp Source Code.";
+  var ref_target = 5;
+  var force_channels = ["@nxt_coder"];
+
+  Bot.setProperty("admin_id", admin_id, "integer");
+  Bot.setProperty("agent_id", agent_id, "integer");
+  Bot.setProperty("agent_username", agent_username, "string");
+  Bot.setProperty("support_username", support_username, "string");
+  Bot.setProperty("withdraw_channel", withdraw_channel, "string");
+  Bot.setProperty("activity_channel", activity_channel, "string");
+  Bot.setProperty("file_name", file_name, "string");
+  Bot.setProperty("ref_target", ref_target, "integer");
+  Bot.setProperty("force_channels", force_channels, "json");
+  Bot.setProperty("auto_activity_posts", true, "boolean");
+  Bot.setProperty("welcome_title", "🏡 Wᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ Mᴀɪɴ Mᴇɴᴜ", "string");
+  Bot.setProperty("welcome_subtitle", "Yᴏᴜ ᴄᴀɴ ɴᴏᴡ ᴜsᴇ ᴛʜɪs ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ.", "string");
+  Bot.setProperty("bot_brand", "Premium Script Bot", "string");
+  Bot.setProperty("reward_text", "5 Rᴇғᴇʀʀᴀʟs = 1 Pʀᴇᴍɪᴜᴍ Fɪʟᴇ", "string");
+
+  if (!Bot.getProperty("total_users")) { Bot.setProperty("total_users", 0, "integer"); }
+  if (!Bot.getProperty("total_keys")) { Bot.setProperty("total_keys", 0, "integer"); }
+  if (!Bot.getProperty("total_withdraw")) { Bot.setProperty("total_withdraw", 0, "integer"); }
+  if (!Bot.getProperty("all_users")) { Bot.setProperty("all_users", [], "json"); }
+  if (!Bot.getProperty("pending_keys")) { Bot.setProperty("pending_keys", [], "json"); }
+  if (!Bot.getProperty("agents")) { Bot.setProperty("agents", [agent_id], "json"); }
+
+  Bot.setProperty("admin_setup", true, "boolean");
+  Bot.sendMessage("✅ *Cᴏɴғɪɢ Sᴀᴠᴇᴅ Sᴜᴄᴄᴇssғᴜʟʟʏ*\n\n👑 Aᴅᴍɪɴ: `" + admin_id + "`\n👨‍💻 Aɢᴇɴᴛ: `" + agent_id + "`\n📁 Fɪʟᴇ: *" + file_name + "*\n🎯 Rᴇғᴇʀʀᴀʟ Tᴀʀɢᴇᴛ: *" + ref_target + "*");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 2: Start
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : /start
+Type          : Slash Command
+On Message    : start
+Description   : User প্রথমবার bot চালু করলে এই command run হয়
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var admin_id = 8373846582;
+  var agent_id = 8373846582;
+  var agent_username = "@agent_username";
+  var support_username = "@support_username";
+  var withdraw_channel = "@withdraw_channel";
+  var activity_channel = "@activity_channel";
+  var file_name = "Neon Hub WebApp Source Code.";
+  var ref_target = 5;
+  var force_channels = ["@nxt_coder"];
+
+  if (!Bot.getProperty("admin_setup")) {
+    Bot.setProperty("admin_id", admin_id, "integer");
+    Bot.setProperty("agent_id", agent_id, "integer");
+    Bot.setProperty("agent_username", agent_username, "string");
+    Bot.setProperty("support_username", support_username, "string");
+    Bot.setProperty("withdraw_channel", withdraw_channel, "string");
+    Bot.setProperty("activity_channel", activity_channel, "string");
+    Bot.setProperty("file_name", file_name, "string");
+    Bot.setProperty("ref_target", ref_target, "integer");
+    Bot.setProperty("force_channels", force_channels, "json");
+    Bot.setProperty("auto_activity_posts", true, "boolean");
+    Bot.setProperty("welcome_title", "🏡 Wᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ Mᴀɪɴ Mᴇɴᴜ", "string");
+    Bot.setProperty("welcome_subtitle", "Yᴏᴜ ᴄᴀɴ ɴᴏᴡ ᴜsᴇ ᴛʜɪs ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ.", "string");
+    Bot.setProperty("bot_brand", "Premium Script Bot", "string");
+    Bot.setProperty("reward_text", "5 Rᴇғᴇʀʀᴀʟs = 1 Pʀᴇᴍɪᴜᴍ Fɪʟᴇ", "string");
+    Bot.setProperty("total_users", 0, "integer");
+    Bot.setProperty("total_keys", 0, "integer");
+    Bot.setProperty("total_withdraw", 0, "integer");
+    Bot.setProperty("all_users", [], "json");
+    Bot.setProperty("pending_keys", [], "json");
+    Bot.setProperty("agents", [agent_id], "json");
+    Bot.setProperty("admin_setup", true, "boolean");
+  }
+
+  var uid = user.telegramid;
+  var users = Bot.getProperty("all_users", []);
+  var joined_before = User.getProperty("joined_before");
+  var ref_id = message.split(" ")[1];
+  var user_number = Bot.getProperty("total_users", 0) + 1;
+  var name = user.first_name || "Premium User";
+  var username = user.username ? "@" + user.username : "Not Set";
+  var referred_by_text = "Direct Join";
+
+  if (!joined_before) {
+    users.push(uid);
+    Bot.setProperty("all_users", users, "json");
+    Bot.setProperty("total_users", user_number, "integer");
+    User.setProperty("joined_before", true, "boolean");
+    User.setProperty("keys", [], "json");
+    Bot.setProperty("balance_" + uid, 0, "integer");
+
+    if (ref_id && ref_id != uid) {
+      var rb = Bot.getProperty("balance_" + ref_id, 0);
+      Bot.setProperty("balance_" + ref_id, rb + 1, "integer");
+      User.setProperty("referred_by", ref_id, "string");
+      referred_by_text = "ID: " + ref_id;
+      Bot.sendMessageToChatWithId(ref_id, "🎉 *Nᴇᴡ Rᴇғᴇʀʀᴀʟ Rᴇᴄᴇɪᴠᴇᴅ!*\n\nYᴏᴜ ɪɴᴠɪᴛᴇᴅ ᴀ ɴᴇᴡ ᴜsᴇʀ.\n📊 Yᴏᴜʀ Rᴇғᴇʀʀᴀʟs: *" + (rb + 1) + "*");
+    }
+
+    if (Bot.getProperty("auto_activity_posts", true)) {
+      var activity_channel = Bot.getProperty("activity_channel", "");
+      if (activity_channel != "") {
+        Bot.sendMessageToChatWithId(activity_channel, "🔔 *Nᴇᴡ Usᴇʀ Jᴏɪɴᴇᴅ!*\n\n🆔 ID: `" + uid + "`\n👤 Nᴀᴍᴇ: *" + name + "*\n📡 Rᴇғᴇʀʀᴇᴅ Bʏ: *" + referred_by_text + "*\n🔗 Usᴇʀɴᴀᴍᴇ: " + username + "\n📊 Usᴇʀ Nᴜᴍʙᴇʀ: *" + user_number + "*");
+      }
+    }
+  }
+
+  Bot.runCommand("check_join");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 3: Check Join
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : check_join
+Type          : Regular Command
+On Message    : check_join
+Description   : Force join channels check শুরু করে
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var channels = Bot.getProperty("force_channels", []);
+  if (!channels || channels.length == 0) {
+    Bot.runCommand("main_menu");
+    return;
+  }
+  User.setProperty("join_check_index", 0, "integer");
+  Bot.runCommand("check_join_step");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 4: Check Join Step
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : check_join_step
+Type          : Regular Command
+On Message    : check_join_step
+Description   : প্রতিটি channel একে একে check করে
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var channels = Bot.getProperty("force_channels", []);
+  var index = User.getProperty("join_check_index", 0);
+  if (index >= channels.length) {
+    User.setProperty("force_join_ok", true, "boolean");
+    Bot.runCommand("main_menu");
+    return;
+  }
+  Api.getChatMember({ chat_id: channels[index], user_id: user.telegramid, on_result: "check_join_result" });
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 5: Check Join Result
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : check_join_result
+Type          : Regular Command
+On Message    : check_join_result
+Description   : Join status দেখে পরবর্তী step নির্ধারণ করে
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var channels = Bot.getProperty("force_channels", []);
+  var index = User.getProperty("join_check_index", 0);
+  var status = options.result.status;
+  var ok = status == "member" || status == "administrator" || status == "creator";
+  if (ok) {
+    User.setProperty("join_check_index", index + 1, "integer");
+    Bot.runCommand("check_join_step");
+    return;
+  }
+  var buttons = [];
+  for (var i = 0; i < channels.length; i++) {
+    var ch = channels[i];
+    buttons.push([{ title: "📢 Jᴏɪɴ " + ch, url: "https://t.me/" + ch.replace("@", "") }]);
+  }
+  buttons.push([{ title: "✅ Cʜᴇᴄᴋ Aɢᴀɪɴ", command: "check_join" }]);
+  Bot.sendInlineKeyboard(buttons, "🚫 *Aᴄᴄᴇss Rᴇsᴛʀɪᴄᴛᴇᴅ*\n\n🔐 Tᴏ ᴜsᴇ ᴛʜɪs ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ, ʏᴏᴜ ᴍᴜsᴛ ᴊᴏɪɴ ᴀʟʟ ʀᴇǫᴜɪʀᴇᴅ ᴄʜᴀɴɴᴇʟs.\n\n📢 *Rᴇǫᴜɪʀᴇᴅ Cʜᴀɴɴᴇʟs:*\n• " + channels.join("\n• ") + "\n\nAғᴛᴇʀ ᴊᴏɪɴɪɴɢ, ᴘʀᴇss Cʜᴇᴄᴋ Aɢᴀɪɴ.");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 6: Main Menu
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : main_menu
+Type          : Regular Command
+On Message    : main_menu
+Description   : Reply keyboard সহ main dashboard দেখায়
+Note          : ⚠️ Reply Keyboard: ON করতে হবে
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var ref_target = Bot.getProperty("ref_target", 5);
+  var ref = Bot.getProperty("balance_" + user.telegramid, 0);
+  var keys = User.getProperty("keys", []);
+  var title = Bot.getProperty("welcome_title", "🏡 Wᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ Mᴀɪɴ Mᴇɴᴜ");
+  var subtitle = Bot.getProperty("welcome_subtitle", "Yᴏᴜ ᴄᴀɴ ɴᴏᴡ ᴜsᴇ ᴛʜɪs ᴘʀᴇᴍɪᴜᴍ ʙᴏᴛ.");
+  var file_name = Bot.getProperty("file_name", "Premium Source Code");
+  var total_users = Bot.getProperty("total_users", 0);
+  var total_keys = Bot.getProperty("total_keys", 0);
+  var progress = "";
+  for (var i = 1; i <= ref_target; i++) { progress += i <= ref ? "▰" : "▱"; }
+  var keyboard = "👤 Mʏ Aᴄᴄᴏᴜɴᴛ, 👥 Rᴇғᴇʀ & Eᴀʀɴ\n🎁 Wɪᴛʜᴅʀᴀᴡ, 🔑 Mʏ Kᴇʏs\n🏆 Lᴇᴀᴅᴇʀʙᴏᴀʀᴅ, 📜 Rᴜʟᴇs\n💬 Sᴜᴘᴘᴏʀᴛ, ℹ️ Hᴏᴡ Iᴛ Wᴏʀᴋs";
+  if (user.telegramid == Bot.getProperty("admin_id")) { keyboard += "\n👑 Aᴅᴍɪɴ Pᴀɴᴇʟ"; }
+  Bot.sendKeyboard(keyboard, title + "\n\nHᴇʟʟᴏ, *" + (user.first_name || "Premium User") + "*\n" + subtitle + "\n\n━━━━━━━━━━━━━━━━\n💎 *Pʀᴇᴍɪᴜᴍ Dᴀsʜʙᴏᴀʀᴅ*\n━━━━━━━━━━━━━━━━\n👥 Rᴇғᴇʀʀᴀʟs: *" + ref + "/" + ref_target + "*\n📊 Pʀᴏɢʀᴇss: `" + progress + "`\n🔑 Yᴏᴜʀ Kᴇʏs: *" + keys.length + "*\n🌐 Tᴏᴛᴀʟ Usᴇʀs: *" + total_users + "*\n📦 Tᴏᴛᴀʟ Cʟᴀɪᴍs: *" + total_keys + "*\n📁 Fɪʟᴇ: *" + file_name + "*\n💼 Sᴛᴀᴛᴜs: *Aᴄᴛɪᴠᴇ*\n━━━━━━━━━━━━━━━━\nUꜱᴇ ᴛʜᴇ ʀᴇᴘʟʏ ᴋᴇʏʙᴏᴀʀᴅ ʙᴇʟᴏᴡ.");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 7: My Account
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : my_account
+Type          : Regular Command
+On Message    : my_account
+Description   : User-এর account info দেখায়
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var ref_target = Bot.getProperty("ref_target", 5);
+  var ref = Bot.getProperty("balance_" + user.telegramid, 0);
+  var keys = User.getProperty("keys", []);
+  var eligible = ref >= ref_target ? "Yᴇs ✅" : "Nᴏ ❌";
+  var username = user.username ? "@" + user.username : "Not Set";
+  var referred_by = User.getProperty("referred_by", "Direct Join");
+  var progress = "";
+  for (var i = 1; i <= ref_target; i++) { progress += i <= ref ? "▰" : "▱"; }
+  Bot.sendMessage("👤 *Pʀᴇᴍɪᴜᴍ Aᴄᴄᴏᴜɴᴛ*\n\n🆔 ID: `" + user.telegramid + "`\n👤 Nᴀᴍᴇ: *" + (user.first_name || "Premium User") + "*\n🔗 Usᴇʀɴᴀᴍᴇ: " + username + "\n📡 Rᴇғᴇʀʀᴇᴅ Bʏ: *" + referred_by + "*\n\n━━━━━━━━━━━━━━━━\n👥 Rᴇғᴇʀʀᴀʟs: *" + ref + "/" + ref_target + "*\n📊 Pʀᴏɢʀᴇss: `" + progress + "`\n🎁 Eʟɪɢɪʙʟᴇ: *" + eligible + "*\n🔑 Tᴏᴛᴀʟ Kᴇʏs: *" + keys.length + "*\n━━━━━━━━━━━━━━━━");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 8: Refer & Earn
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : refer
+Type          : Regular Command
+On Message    : refer
+Description   : Referral link দেখায় ও share করার button দেয়
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var bot_username = bot.name;
+  var ref_link = "https://t.me/" + bot_username + "?start=" + user.telegramid;
+  var ref_target = Bot.getProperty("ref_target", 5);
+  var ref = Bot.getProperty("balance_" + user.telegramid, 0);
+  var reward_text = Bot.getProperty("reward_text", ref_target + " Rᴇғᴇʀʀᴀʟs = 1 Pʀᴇᴍɪᴜᴍ Fɪʟᴇ");
+  var buttons = [[{ title: "📤 Sʜᴀʀᴇ Lɪɴᴋ", url: "https://t.me/share/url?url=" + encodeURIComponent(ref_link) + "&text=" + encodeURIComponent("Join this premium bot and unlock exclusive source files.") }]];
+  Bot.sendInlineKeyboard(buttons, "👥 *Iɴᴠɪᴛᴇ & Eᴀʀɴ*\n\nSʜᴀʀᴇ ʏᴏᴜʀ ᴘᴇʀsᴏɴᴀʟ ʟɪɴᴋ ᴀɴᴅ ᴜɴʟᴏᴄᴋ ᴘʀᴇᴍɪᴜᴍ ғɪʟᴇs.\n\n🔗 *Yᴏᴜʀ Lɪɴᴋ:*\n`" + ref_link + "`\n\n🎁 Rᴇᴡᴀʀᴅ: *" + reward_text + "*\n👥 Yᴏᴜʀ Rᴇғᴇʀʀᴀʟs: *" + ref + "/" + ref_target + "*");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 9: Withdraw
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : withdraw
+Type          : Regular Command
+On Message    : withdraw
+Description   : Referral পূরণ হলে key generate করে, agent-কে notify করে
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var ref_target = Bot.getProperty("ref_target", 5);
+  var ref = Bot.getProperty("balance_" + user.telegramid, 0);
+  var file_name = Bot.getProperty("file_name", "Premium Source Code");
+  if (ref < ref_target) {
+    Bot.sendMessage("🔒 *Wɪᴛʜᴅʀᴀᴡ Lᴏᴄᴋᴇᴅ*\n\nYᴏᴜ ɴᴇᴇᴅ *" + (ref_target - ref) + "* ᴍᴏʀᴇ ʀᴇғᴇʀʀᴀʟs.\n👥 Yᴏᴜʀ Rᴇғᴇʀʀᴀʟs: *" + ref + "/" + ref_target + "*\n📁 Fɪʟᴇ: *" + file_name + "*");
+    return;
+  }
+  function makePart() { return Math.random().toString(36).substring(2, 6).toUpperCase(); }
+  var key = "TBB-" + makePart() + "-" + makePart() + "-" + makePart();
+  var keys = User.getProperty("keys", []);
+  keys.push(key);
+  User.setProperty("keys", keys, "json");
+  Bot.setProperty("key_owner_" + key, user.telegramid, "integer");
+  Bot.setProperty("key_status_" + key, "Pending", "string");
+  Bot.setProperty("key_file_" + key, file_name, "string");
+  Bot.setProperty("balance_" + user.telegramid, ref - ref_target, "integer");
+  Bot.setProperty("total_keys", Bot.getProperty("total_keys", 0) + 1, "integer");
+  Bot.setProperty("total_withdraw", Bot.getProperty("total_withdraw", 0) + 1, "integer");
+  var pending = Bot.getProperty("pending_keys", []);
+  pending.push(key);
+  Bot.setProperty("pending_keys", pending, "json");
+  var agent_id = Bot.getProperty("agent_id");
+  var agent_username = Bot.getProperty("agent_username", "@agent_username");
+  var username = user.username ? "@" + user.username : "Not Set";
+  Bot.sendMessage("✅ *Wɪᴛʜᴅʀᴀᴡ Sᴜʙᴍɪᴛᴛᴇᴅ*\n\n📁 Fɪʟᴇ: *" + file_name + "*\n🔑 Yᴏᴜʀ Kᴇʏ:\n`" + key + "`\n\n👨‍💻 Aɢᴇɴᴛ: " + agent_username + "\n\nSᴇɴᴅ ᴛʜɪs ᴋᴇʏ ᴛᴏ ᴛʜᴇ ᴀɢᴇɴᴛ ᴛᴏ ʀᴇᴄᴇɪᴠᴇ ʏᴏᴜʀ ғɪʟᴇ.");
+  var withdraw_channel = Bot.getProperty("withdraw_channel", "");
+  if (withdraw_channel != "") {
+    Bot.sendMessageToChatWithId(withdraw_channel, "📦 *Nᴇᴡ Wɪᴛʜᴅʀᴀᴡ Rᴇǫᴜᴇsᴛ*\n\n👤 Usᴇʀ: " + username + "\n🆔 ID: `" + user.telegramid + "`\n📁 Fɪʟᴇ: *" + file_name + "*\n\nSᴛᴀᴛᴜs: *Pᴇɴᴅɪɴɢ*");
+  }
+  if (Bot.getProperty("auto_activity_posts", true)) {
+    var activity_channel = Bot.getProperty("activity_channel", "");
+    if (activity_channel != "") {
+      Bot.sendMessageToChatWithId(activity_channel, "✅ *Nᴇᴡ Fɪʟᴇ Sᴜᴄᴄᴇssғᴜʟʟʏ Cʟᴀɪᴍᴇᴅ!*\n\n👤 Usᴇʀ ID: `" + user.telegramid + "`\n📁 Fɪʟᴇ Nᴀᴍᴇ: *" + file_name + "*");
+    }
+  }
+  Bot.sendInlineKeyboardToChatWithId(agent_id, [[{ title: "✅ Cᴏɴғɪʀᴍ", command: "agent_confirm " + key }, { title: "❌ Cᴀɴᴄᴇʟ", command: "agent_cancel " + key }]], "👨‍💻 *Aɢᴇɴᴛ Pᴀɴᴇʟ*\n\nNᴇᴡ ᴅᴇʟɪᴠᴇʀʏ ʀᴇǫᴜᴇsᴛ.\n\n👤 Usᴇʀ: " + username + "\n🆔 ID: `" + user.telegramid + "`\n📁 Fɪʟᴇ: *" + file_name + "*\n\n🔑 Kᴇʏ:\n`" + key + "`\n\nCᴏɴғɪʀᴍ ᴅᴇʟɪᴠᴇʀʏ?");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 10: My Keys
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : my_keys
+Type          : Regular Command
+On Message    : my_keys
+Description   : User-এর সব generated keys দেখায়
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var keys = User.getProperty("keys", []);
+  var text = "🔑 *Mʏ Pʀᴇᴍɪᴜᴍ Kᴇʏs*\n\n";
+  if (keys.length == 0) { text += "Yᴏᴜ ʜᴀᴠᴇ ɴᴏ ᴋᴇʏs ʏᴇᴛ."; }
+  else {
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
+      text += "*" + (i + 1) + ".* `" + k + "`\n📁 Fɪʟᴇ: *" + Bot.getProperty("key_file_" + k, "Premium File") + "*\n📌 Sᴛᴀᴛᴜs: *" + Bot.getProperty("key_status_" + k, "Pending") + "*\n\n";
+    }
+  }
+  Bot.sendMessage(text);
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 11: Agent Confirm
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : agent_confirm
+Type          : Regular Command
+On Message    : agent_confirm
+Description   : Agent delivery confirm করলে file পাঠায়
+Note          : ⚠️ Inline button থেকে trigger হয় — 'agent_confirm KEY' format-এ
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var key = params;
+  var agents = Bot.getProperty("agents", []);
+  var is_agent = agents.indexOf(user.telegramid) >= 0 || user.telegramid == Bot.getProperty("agent_id") || user.telegramid == Bot.getProperty("admin_id");
+  if (!is_agent) { Bot.sendMessage("❌ Aᴄᴄᴇss Dᴇɴɪᴇᴅ"); return; }
+  var owner = Bot.getProperty("key_owner_" + key);
+  if (!owner) { Bot.sendMessage("❌ Iɴᴠᴀʟɪᴅ Kᴇʏ"); return; }
+  Bot.setProperty("key_status_" + key, "Used", "string");
+  var pending = Bot.getProperty("pending_keys", []);
+  var updated = [];
+  for (var i = 0; i < pending.length; i++) { if (pending[i] != key) { updated.push(pending[i]); } }
+  Bot.setProperty("pending_keys", updated, "json");
+  var file_name = Bot.getProperty("key_file_" + key, Bot.getProperty("file_name", "Premium File"));
+  var script_file = Bot.getProperty("script_file_id", "");
+  if (script_file != "") {
+    Api.sendDocument({ chat_id: owner, document: script_file, caption: "🎉 *Sᴄʀɪᴘᴛ Dᴇʟɪᴠᴇʀᴇᴅ*\n\n📁 Fɪʟᴇ: *" + file_name + "*\n✅ Yᴏᴜʀ ғɪʟᴇ ʜᴀs ʙᴇᴇɴ sᴇɴᴛ sᴜᴄᴄᴇssғᴜʟʟʏ.", parse_mode: "Markdown" });
+  } else {
+    Bot.sendMessageToChatWithId(owner, "🎉 *Sᴄʀɪᴘᴛ Dᴇʟɪᴠᴇʀᴇᴅ*\n\n📁 Fɪʟᴇ: *" + file_name + "*\n✅ Yᴏᴜʀ ʀᴇǫᴜᴇsᴛ ʜᴀs ʙᴇᴇɴ ᴀᴘᴘʀᴏᴠᴇᴅ.");
+  }
+  Bot.sendMessage("✅ *Dᴇʟɪᴠᴇʀʏ Cᴏᴍᴘʟᴇᴛᴇᴅ*\n\n👤 Usᴇʀ ID: `" + owner + "`\n🔑 Kᴇʏ: `" + key + "`");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 12: Agent Cancel
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : agent_cancel
+Type          : Regular Command
+On Message    : agent_cancel
+Description   : Agent delivery cancel করলে user-কে notify করে
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var key = params;
+  var agents = Bot.getProperty("agents", []);
+  var is_agent = agents.indexOf(user.telegramid) >= 0 || user.telegramid == Bot.getProperty("agent_id") || user.telegramid == Bot.getProperty("admin_id");
+  if (!is_agent) { Bot.sendMessage("❌ Aᴄᴄᴇss Dᴇɴɪᴇᴅ"); return; }
+  var owner = Bot.getProperty("key_owner_" + key);
+  if (owner) {
+    Bot.setProperty("key_status_" + key, "Cancelled", "string");
+    Bot.sendMessageToChatWithId(owner, "❌ *Dᴇʟɪᴠᴇʀʏ Cᴀɴᴄᴇʟʟᴇᴅ*\n\nPʟᴇᴀsᴇ ᴄᴏɴᴛᴀᴄᴛ sᴜᴘᴘᴏʀᴛ.");
+  }
+  var pending = Bot.getProperty("pending_keys", []);
+  var updated = [];
+  for (var i = 0; i < pending.length; i++) { if (pending[i] != key) { updated.push(pending[i]); } }
+  Bot.setProperty("pending_keys", updated, "json");
+  Bot.sendMessage("❌ *Dᴇʟɪᴠᴇʀʏ Cᴀɴᴄᴇʟʟᴇᴅ*\n\n🔑 Kᴇʏ: `" + key + "`");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 13: Leaderboard
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : leaderboard
+Type          : Regular Command
+On Message    : leaderboard
+Description   : Top 10 referral users-দের list দেখায়
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var users = Bot.getProperty("all_users", []);
+  var text = "🏆 *Tᴏᴘ Rᴇғᴇʀʀᴀʟ Lᴇᴀᴅᴇʀʙᴏᴀʀᴅ*\n\n";
+  if (users.length == 0) { text += "Nᴏ ᴜsᴇʀs ғᴏᴜɴᴅ."; }
+  else {
+    for (var i = 0; i < users.length && i < 10; i++) {
+      var uid = users[i];
+      text += (i + 1) + ". Usᴇʀ `" + uid + "` — *" + Bot.getProperty("balance_" + uid, 0) + "* ʀᴇғᴇʀʀᴀʟs\n";
+    }
+  }
+  Bot.sendMessage(text);
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 14: Support
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : support
+Type          : Regular Command
+On Message    : support
+Description   : Support-এর সাথে যোগাযোগের button দেয়
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var support = Bot.getProperty("support_username", "@support_username");
+  Bot.sendInlineKeyboard([[{ title: "💬 Cᴏɴᴛᴀᴄᴛ Sᴜᴘᴘᴏʀᴛ", url: "https://t.me/" + support.replace("@", "") }]], "💬 *Pʀᴇᴍɪᴜᴍ Sᴜᴘᴘᴏʀᴛ*\n\nNᴇᴇᴅ ʜᴇʟᴘ? Cᴏɴᴛᴀᴄᴛ ᴏᴜʀ sᴜᴘᴘᴏʀᴛ ᴀɢᴇɴᴛ.\n\n👤 Sᴜᴘᴘᴏʀᴛ: " + support);
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 15: Rules
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : rules
+Type          : Regular Command
+On Message    : rules
+Description   : Bot-এর rules দেখায়
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+Bot.sendMessage("📜 *Pʀᴇᴍɪᴜᴍ Rᴜʟᴇs*\n\n1. Oɴʟʏ ʀᴇᴀʟ ᴜsᴇʀs ᴀʀᴇ ᴄᴏᴜɴᴛᴇᴅ.\n2. Fᴀᴋᴇ ᴏʀ sᴘᴀᴍ ʀᴇғᴇʀʀᴀʟs ᴍᴀʏ ʙᴇ ʀᴇᴍᴏᴠᴇᴅ.\n3. Oɴᴇ ᴘʀᴇᴍɪᴜᴍ ғɪʟᴇ ᴄᴀɴ ʙᴇ ᴄʟᴀɪᴍᴇᴅ ᴘᴇʀ ᴄᴏᴍᴘʟᴇᴛᴇ ʀᴇғᴇʀʀᴀʟ ᴛᴀʀɢᴇᴛ.\n4. Kᴇᴇᴘ ʏᴏᴜʀ ᴋᴇʏ sᴀғᴇ.\n5. Cᴏɴᴛᴀᴄᴛ sᴜᴘᴘᴏʀᴛ ғᴏʀ ᴀɴʏ ᴅᴇʟɪᴠᴇʀʏ ɪssᴜᴇ.");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 16: How It Works
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : how_it_works
+Type          : Regular Command
+On Message    : how_it_works
+Description   : Bot কীভাবে কাজ করে তা ব্যাখ্যা করে
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+Bot.sendMessage("ℹ️ *Hᴏᴡ Iᴛ Wᴏʀᴋs*\n\n1. Jᴏɪɴ ᴀʟʟ ʀᴇǫᴜɪʀᴇᴅ ᴄʜᴀɴɴᴇʟs.\n2. Sʜᴀʀᴇ ʏᴏᴜʀ ʀᴇғᴇʀʀᴀʟ ʟɪɴᴋ.\n3. Iɴᴠɪᴛᴇ ʀᴇᴀʟ ᴜsᴇʀs.\n4. Uɴʟᴏᴄᴋ ᴡɪᴛʜᴅʀᴀᴡ.\n5. Gᴇᴛ ᴀ ᴘʀᴇᴍɪᴜᴍ ᴋᴇʏ.\n6. Aɢᴇɴᴛ ᴅᴇʟɪᴠᴇʀs ᴛʜᴇ ғɪʟᴇ.");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 17: Admin
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : /admin
+Type          : Slash Command
+On Message    : admin
+Description   : Admin panel-এ entry point — admin check করে
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+if (user.telegramid != Bot.getProperty("admin_id")) { Bot.sendMessage("❌ Aᴄᴄᴇss Dᴇɴɪᴇᴅ"); return; }
+  Bot.runCommand("admin_panel");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 18: Admin Panel
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : admin_panel
+Type          : Regular Command
+On Message    : admin_panel
+Description   : Admin control dashboard সব stats সহ দেখায়
+Note          : ⚠️ Reply Keyboard: ON করতে হবে
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+if (user.telegramid != Bot.getProperty("admin_id")) { Bot.sendMessage("❌ Aᴄᴄᴇss Dᴇɴɪᴇᴅ"); return; }
+  var keyboard = "📢 Bʀᴏᴀᴅᴄᴀsᴛ, 📢 Fᴏʀᴄᴇ Jᴏɪɴ\n➕ Aᴅᴅ Aɢᴇɴᴛ, ➖ Rᴇᴍᴏᴠᴇ Aɢᴇɴᴛ\n📡 Aᴄᴛɪᴠɪᴛʏ Pᴏsᴛs, ⚙️ Bᴏᴛ Sᴇᴛᴛɪɴɢs\n🎨 Cᴜsᴛᴏᴍɪᴢᴇ UI, 📊 Sᴛᴀᴛs\n👨‍💻 Aɢᴇɴᴛ Pᴀɴᴇʟ, 🏡 Hᴏᴍᴇ";
+  var pending = Bot.getProperty("pending_keys", []);
+  Bot.sendKeyboard(keyboard, "👑 *Aᴅᴍɪɴ Cᴏɴᴛʀᴏʟ Dᴀsʜʙᴏᴀʀᴅ*\n\n━━━━━━━━━━━━━━━━\n👥 Tᴏᴛᴀʟ Usᴇʀs: *" + Bot.getProperty("total_users", 0) + "*\n🎁 Tᴏᴛᴀʟ Wɪᴛʜᴅʀᴀᴡ: *" + Bot.getProperty("total_withdraw", 0) + "*\n🔑 Kᴇʏs Gᴇɴᴇʀᴀᴛᴇᴅ: *" + Bot.getProperty("total_keys", 0) + "*\n📦 Pᴇɴᴅɪɴɢ: *" + pending.length + "*\n📡 Aᴄᴛɪᴠɪᴛʏ Pᴏsᴛs: *" + (Bot.getProperty("auto_activity_posts", true) ? "ON ✅" : "OFF ❌") + "*\n━━━━━━━━━━━━━━━━");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 19: Force Join Panel
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : force_join_panel
+Type          : Regular Command
+On Message    : force_join_panel
+Description   : Force join channels manage করার panel
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+if (user.telegramid != Bot.getProperty("admin_id")) { return; }
+  var channels = Bot.getProperty("force_channels", []);
+  var text = "📢 *Fᴏʀᴄᴇ Jᴏɪɴ Mᴀɴᴀɢᴇʀ*\n\n";
+  if (channels.length == 0) { text += "Nᴏ ᴄʜᴀɴɴᴇʟ ᴀᴅᴅᴇᴅ."; }
+  else { for (var i = 0; i < channels.length; i++) { text += (i + 1) + ". " + channels[i] + "\n"; } }
+  Bot.sendKeyboard("➕ Aᴅᴅ Cʜᴀɴɴᴇʟ, ➖ Rᴇᴍᴏᴠᴇ Cʜᴀɴɴᴇʟ\n👑 Aᴅᴍɪɴ Pᴀɴᴇʟ", text);
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 20: Settings
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : settings
+Type          : Regular Command
+On Message    : settings
+Description   : Bot-এর সব settings দেখায় ও পরিবর্তনের option দেয়
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+if (user.telegramid != Bot.getProperty("admin_id")) { return; }
+  Bot.sendKeyboard("✏️ Cʜᴀɴɢᴇ Rᴇғᴇʀʀᴀʟ, 👨‍💻 Cʜᴀɴɢᴇ Aɢᴇɴᴛ Usᴇʀɴᴀᴍᴇ\n🆔 Cʜᴀɴɢᴇ Aɢᴇɴᴛ ID, 📂 Sᴇᴛ Sᴄʀɪᴘᴛ Fɪʟᴇ\n📁 Sᴇᴛ Fɪʟᴇ Nᴀᴍᴇ, 💬 Sᴇᴛ Sᴜᴘᴘᴏʀᴛ\n📦 Sᴇᴛ Wɪᴛʜᴅʀᴀᴡ Cʜᴀɴɴᴇʟ, 📡 Sᴇᴛ Aᴄᴛɪᴠɪᴛʏ Cʜᴀɴɴᴇʟ\n👑 Aᴅᴍɪɴ Pᴀɴᴇʟ", "⚙️ *Bᴏᴛ Sᴇᴛᴛɪɴɢs*\n\n🎯 Rᴇғᴇʀʀᴀʟ Rᴇǫᴜɪʀᴇᴅ: *" + Bot.getProperty("ref_target", 5) + "*\n👨‍💻 Aɢᴇɴᴛ Usᴇʀɴᴀᴍᴇ: " + Bot.getProperty("agent_username", "@agent_username") + "\n🆔 Aɢᴇɴᴛ ID: `" + Bot.getProperty("agent_id") + "`\n📁 Fɪʟᴇ Nᴀᴍᴇ: *" + Bot.getProperty("file_name", "Premium File") + "*\n💬 Sᴜᴘᴘᴏʀᴛ: " + Bot.getProperty("support_username", "@support_username") + "\n📦 Wɪᴛʜᴅʀᴀᴡ Cʜᴀɴɴᴇʟ: " + Bot.getProperty("withdraw_channel", "Not Set") + "\n📡 Aᴄᴛɪᴠɪᴛʏ Cʜᴀɴɴᴇʟ: " + Bot.getProperty("activity_channel", "Not Set"));
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 21: Customize UI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : customize_ui
+Type          : Regular Command
+On Message    : customize_ui
+Description   : Bot-এর brand, title, subtitle, reward text পরিবর্তন করার option
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+if (user.telegramid != Bot.getProperty("admin_id")) { return; }
+  Bot.sendKeyboard("🏷️ Sᴇᴛ Bʀᴀɴᴅ Nᴀᴍᴇ, 🏡 Sᴇᴛ Wᴇʟᴄᴏᴍᴇ Tɪᴛʟᴇ\n📝 Sᴇᴛ Wᴇʟᴄᴏᴍᴇ Sᴜʙᴛɪᴛʟᴇ, 🎁 Sᴇᴛ Rᴇᴡᴀʀᴅ Tᴇxᴛ\n👑 Aᴅᴍɪɴ Pᴀɴᴇʟ", "🎨 *Cᴜsᴛᴏᴍɪᴢᴇ UI*\n\n🏷️ Bʀᴀɴᴅ: *" + Bot.getProperty("bot_brand", "Premium Script Bot") + "*\n🏡 Tɪᴛʟᴇ: *" + Bot.getProperty("welcome_title", "Welcome") + "*\n📝 Sᴜʙᴛɪᴛʟᴇ: *" + Bot.getProperty("welcome_subtitle", "Premium Bot") + "*\n🎁 Rᴇᴡᴀʀᴅ: *" + Bot.getProperty("reward_text", "Premium Reward") + "*");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 22: Activity Panel
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : activity_panel
+Type          : Regular Command
+On Message    : activity_panel
+Description   : Auto activity posts ON/OFF ও channel set করার panel
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+if (user.telegramid != Bot.getProperty("admin_id")) { return; }
+  Bot.sendKeyboard("✅ Aᴄᴛɪᴠɪᴛʏ ON, ❌ Aᴄᴛɪᴠɪᴛʏ OFF\n📡 Sᴇᴛ Aᴄᴛɪᴠɪᴛʏ Cʜᴀɴɴᴇʟ, 👑 Aᴅᴍɪɴ Pᴀɴᴇʟ", "📡 *Aᴜᴛᴏ Aᴄᴛɪᴠɪᴛʏ Pᴏsᴛs*\n\nCʜᴀɴɴᴇʟ: " + Bot.getProperty("activity_channel", "Not Set") + "\nSᴛᴀᴛᴜs: *" + (Bot.getProperty("auto_activity_posts", true) ? "ON ✅" : "OFF ❌") + "*\n\nAᴜᴛᴏ ᴘᴏsᴛs:\n• Nᴇᴡ ᴜsᴇʀ ᴊᴏɪɴ\n• Nᴇᴡ ʀᴇғᴇʀʀᴀʟ\n• Fɪʟᴇ ᴄʟᴀɪᴍ / ᴡɪᴛʜᴅʀᴀᴡ");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 23: Agent Panel
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : agent_panel
+Type          : Regular Command
+On Message    : agent_panel
+Description   : Agent-দের pending delivery requests দেখায়
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var agents = Bot.getProperty("agents", []);
+  var is_agent = agents.indexOf(user.telegramid) >= 0 || user.telegramid == Bot.getProperty("agent_id") || user.telegramid == Bot.getProperty("admin_id");
+  if (!is_agent) { Bot.sendMessage("❌ Aᴄᴄᴇss Dᴇɴɪᴇᴅ"); return; }
+  var pending = Bot.getProperty("pending_keys", []);
+  var text = "👨‍💻 *Aɢᴇɴᴛ Pᴇɴᴅɪɴɢ Pᴀɴᴇʟ*\n\n";
+  if (pending.length == 0) { text += "Nᴏ ᴘᴇɴᴅɪɴɢ ᴅᴇʟɪᴠᴇʀʏ ʀᴇǫᴜᴇsᴛs."; }
+  else {
+    for (var i = 0; i < pending.length; i++) {
+      var k = pending[i];
+      text += (i + 1) + ". `" + k + "`\n👤 Usᴇʀ ID: `" + Bot.getProperty("key_owner_" + k, "Unknown") + "`\n📌 Sᴛᴀᴛᴜs: *" + Bot.getProperty("key_status_" + k, "Pending") + "*\n\n";
+    }
+  }
+  Bot.sendMessage(text);
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 24: Stats
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : stats
+Type          : Regular Command
+On Message    : stats
+Description   : Admin-এর জন্য সব statistics দেখায়
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+if (user.telegramid != Bot.getProperty("admin_id")) { return; }
+  var pending = Bot.getProperty("pending_keys", []);
+  var channels = Bot.getProperty("force_channels", []);
+  var agents = Bot.getProperty("agents", []);
+  Bot.sendMessage("📊 *Bᴏᴛ Sᴛᴀᴛɪsᴛɪᴄs*\n\n👥 Tᴏᴛᴀʟ Usᴇʀs: *" + Bot.getProperty("total_users", 0) + "*\n🎁 Tᴏᴛᴀʟ Wɪᴛʜᴅʀᴀᴡ: *" + Bot.getProperty("total_withdraw", 0) + "*\n🔑 Kᴇʏs Gᴇɴᴇʀᴀᴛᴇᴅ: *" + Bot.getProperty("total_keys", 0) + "*\n📦 Pᴇɴᴅɪɴɢ: *" + pending.length + "*\n📢 Fᴏʀᴄᴇ Cʜᴀɴɴᴇʟs: *" + channels.length + "*\n👨‍💻 Aɢᴇɴᴛs: *" + agents.length + "*");
+────────────────────────────────────────────────────────────────────
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📌  COMMAND 25: Wildcard Handler
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Command Name  : *
+Type          : Default Command
+On Message    : *
+Description   : Unhandled messages ধরে সঠিক command-এ পাঠায়
+Note          : ⚠️⚠️ এই command সবার শেষে যোগ করুন!
+
+কোড: (নিচের পুরো কোড copy করে paste করুন)
+────────────────────────────────────────────────────────────────────
+var msg = message.toLowerCase().trim();
+
+  if (msg == "👤 mʏ aᴄᴄᴏᴜɴᴛ") { Bot.runCommand("my_account"); return; }
+  if (msg == "👥 ʀᴇғᴇʀ & eᴀʀɴ") { Bot.runCommand("refer"); return; }
+  if (msg == "🎁 wɪᴛʜᴅʀᴀᴡ") { Bot.runCommand("withdraw"); return; }
+  if (msg == "🔑 mʏ kᴇʏs") { Bot.runCommand("my_keys"); return; }
+  if (msg == "🏆 lᴇᴀᴅᴇʀʙᴏᴀʀᴅ") { Bot.runCommand("leaderboard"); return; }
+  if (msg == "📜 ʀᴜʟᴇs") { Bot.runCommand("rules"); return; }
+  if (msg == "💬 sᴜᴘᴘᴏʀᴛ") { Bot.runCommand("support"); return; }
+  if (msg == "ℹ️ hᴏᴡ ɪᴛ wᴏʀᴋs") { Bot.runCommand("how_it_works"); return; }
+  if (msg == "👑 aᴅᴍɪɴ pᴀɴᴇʟ") { Bot.runCommand("admin_panel"); return; }
+  if (msg == "📢 bʀᴏᴀᴅᴄᴀsᴛ") { Bot.runCommand("broadcast_panel"); return; }
+  if (msg == "📢 ғᴏʀᴄᴇ ᴊᴏɪɴ") { Bot.runCommand("force_join_panel"); return; }
+  if (msg == "📡 aᴄᴛɪᴠɪᴛʏ pᴏsᴛs") { Bot.runCommand("activity_panel"); return; }
+  if (msg == "⚙️ bᴏᴛ sᴇᴛᴛɪɴɢs") { Bot.runCommand("settings"); return; }
+  if (msg == "🎨 cᴜsᴛᴏᴍɪᴢᴇ uɪ") { Bot.runCommand("customize_ui"); return; }
+  if (msg == "📊 sᴛᴀᴛs") { Bot.runCommand("stats"); return; }
+  if (msg == "👨‍💻 aɢᴇɴᴛ pᴀɴᴇʟ") { Bot.runCommand("agent_panel"); return; }
+  if (msg == "🏡 hᴏᴍᴇ") { Bot.runCommand("main_menu"); return; }
+
+  Bot.sendMessage("❓ আমি এই মেসেজটি বুঝতে পারিনি।\n/start দিয়ে আবার শুরু করুন।");
+────────────────────────────────────────────────────────────────────
+
+╔══════════════════════════════════════════════════════════════════╗
+  ║  ✅ সব 25টি command যোগ হয়ে গেলে "config" টাইপ করে run করুন   ║
+  ║     তারপর /start দিয়ে bot test করুন                             ║
+  ╚══════════════════════════════════════════════════════════════════╝
+  
