@@ -1,0 +1,19 @@
+{
+  "bot_name": "Premium TBB Bot",
+  "admin_id": 8373846582,
+  "agent_id": 8373846582,
+  "agent_username": "@agent_username",
+  "support_username": "@support_username",
+  "withdraw_channel": "@withdraw_channel",
+  "activity_channel": "@activity_channel",
+  "file_name": "Neon Hub WebApp Source Code",
+  "ref_target": 5,
+  "force_channels": [
+    "@nxt_coder"
+  ],
+  "auto_activity_posts": true,
+  "welcome_title": "🏡 Welcome to the Main Menu",
+  "welcome_subtitle": "You can now use this premium bot.",
+  "bot_brand": "Premium Script Bot",
+  "reward_text": "5 Referrals = 1 Premium File"
+}
