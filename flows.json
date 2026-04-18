@@ -1,0 +1,222 @@
+{
+  "start": {
+    "message": "🏡 *Welcome to the Main Menu*\n\nHello, {{user_name}}!\nYou can now use this premium bot.\n\n━━━━━━━━━━━━━━━━\n💎 *Premium Dashboard*\n━━━━━━━━━━━━━━━━\n👥 Referrals: {{balance}}/5\n🔑 Your Keys: {{keys_count}}\n🌐 Total Users: {{total_users}}\n━━━━━━━━━━━━━━━━",
+    "buttons": [
+      [
+        { "text": "👤 My Account", "next": "my_account" },
+        { "text": "👥 Refer & Earn", "next": "refer" }
+      ],
+      [
+        { "text": "🎁 Withdraw", "next": "withdraw" },
+        { "text": "🔑 My Keys", "next": "my_keys" }
+      ],
+      [
+        { "text": "🏆 Leaderboard", "next": "leaderboard" },
+        { "text": "📜 Rules", "next": "rules" }
+      ],
+      [
+        { "text": "💬 Support", "next": "support" },
+        { "text": "ℹ️ How It Works", "next": "how_it_works" }
+      ]
+    ]
+  },
+
+  "check_join": {
+    "message": "🚫 *Access Restricted*\n\n🔐 To use this premium bot, you must join all required channels.\n\n📢 *Required Channels:*\n• @nxt_coder\n\nAfter joining, press Check Again.",
+    "buttons": [
+      [{ "text": "📢 Join @nxt_coder", "url": "https://t.me/nxt_coder" }],
+      [{ "text": "✅ Check Again", "action": "check_join", "channel": "@nxt_coder", "next": "start" }]
+    ]
+  },
+
+  "my_account": {
+    "message": "👤 *Premium Account*\n\n🆔 ID: {{user_id}}\n👤 Name: {{user_name}}\n🔗 Username: {{username}}\n\n━━━━━━━━━━━━━━━━\n👥 Referrals: {{balance}}/5\n🎁 Eligible: {{eligible}}\n🔑 Total Keys: {{keys_count}}\n━━━━━━━━━━━━━━━━",
+    "buttons": [
+      [{ "text": "👥 Refer & Earn", "next": "refer" }],
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "refer": {
+    "message": "👥 *Invite & Earn*\n\nShare your personal link and unlock premium files.\n\n🔗 *Your Referral Link:*\n{{ref_link}}\n\n🎁 Reward: 5 Referrals = 1 Premium File\n👥 Your Referrals: {{balance}}/5",
+    "buttons": [
+      [{ "text": "📤 Share Link", "action": "share_ref_link" }],
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "withdraw": {
+    "message": "🎁 *Withdraw Premium File*\n\n📊 Your Referrals: {{balance}}/5\n\n✅ You need 5 referrals to withdraw one premium file.\n\nPress the button below to submit your withdrawal request.",
+    "buttons": [
+      [{ "text": "🔑 Generate Key", "action": "withdraw", "required_balance": 5, "next": "withdraw_success" }],
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "withdraw_success": {
+    "message": "✅ *Withdraw Submitted!*\n\n📁 File: Neon Hub WebApp Source Code\n🔑 Your Key: {{generated_key}}\n\n👨‍💻 Agent will deliver your file.\nContact agent with your key.",
+    "buttons": [
+      [{ "text": "💬 Contact Agent", "url": "https://t.me/agent_username" }],
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "withdraw_locked": {
+    "message": "🔒 *Withdraw Locked*\n\nYou need more referrals.\n👥 Your Referrals: {{balance}}/5\n\nShare your link to invite more users!",
+    "buttons": [
+      [{ "text": "👥 Refer & Earn", "next": "refer" }],
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "my_keys": {
+    "message": "🔑 *My Premium Keys*\n\n{{keys_list}}\n\nKeys are delivered by agent after withdrawal.",
+    "buttons": [
+      [{ "text": "🎁 Withdraw", "next": "withdraw" }],
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "leaderboard": {
+    "message": "🏆 *Top Referral Leaderboard*\n\n{{leaderboard_list}}\n\nKeep referring to climb the ranks!",
+    "buttons": [
+      [{ "text": "👥 Refer & Earn", "next": "refer" }],
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "support": {
+    "message": "💬 *Premium Support*\n\nNeed help? Contact our support agent.\n\n👤 Support: @support_username\n🕐 Available: 24/7",
+    "buttons": [
+      [{ "text": "💬 Contact Support", "url": "https://t.me/support_username" }],
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "rules": {
+    "message": "📜 *Premium Rules*\n\n1. Only real users are counted.\n2. Fake or spam referrals may be removed.\n3. One premium file can be claimed per complete referral target.\n4. Keep your key safe.\n5. Contact support for any delivery issue.",
+    "buttons": [
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "how_it_works": {
+    "message": "ℹ️ *How It Works*\n\n1️⃣ Join all required channels.\n2️⃣ Share your referral link.\n3️⃣ Invite real users.\n4️⃣ Unlock withdraw (5 referrals).\n5️⃣ Get a premium key.\n6️⃣ Agent delivers the file.",
+    "buttons": [
+      [{ "text": "👥 Start Referring", "next": "refer" }],
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "admin": {
+    "message": "👑 *Admin Control Dashboard*\n\n━━━━━━━━━━━━━━━━\n👥 Total Users: {{total_users}}\n🎁 Total Withdraw: {{total_withdraw}}\n🔑 Keys Generated: {{total_keys}}\n📦 Pending: {{pending_count}}\n📡 Activity Posts: {{activity_status}}\n━━━━━━━━━━━━━━━━",
+    "buttons": [
+      [
+        { "text": "📢 Broadcast", "next": "broadcast_panel" },
+        { "text": "📢 Force Join", "next": "force_join_panel" }
+      ],
+      [
+        { "text": "➕ Add Agent", "next": "add_agent" },
+        { "text": "➖ Remove Agent", "next": "remove_agent" }
+      ],
+      [
+        { "text": "📡 Activity Posts", "next": "activity_panel" },
+        { "text": "⚙️ Settings", "next": "settings" }
+      ],
+      [
+        { "text": "🎨 Customize UI", "next": "customize_ui" },
+        { "text": "📊 Stats", "next": "stats" }
+      ],
+      [{ "text": "🏡 Home", "next": "start" }]
+    ]
+  },
+
+  "stats": {
+    "message": "📊 *Bot Statistics*\n\n👥 Total Users: {{total_users}}\n🎁 Total Withdraw: {{total_withdraw}}\n🔑 Keys Generated: {{total_keys}}\n📦 Pending: {{pending_count}}\n📢 Force Channels: {{force_channels_count}}\n👨‍💻 Agents: {{agents_count}}",
+    "buttons": [
+      [{ "text": "👑 Admin Panel", "next": "admin" }]
+    ]
+  },
+
+  "settings": {
+    "message": "⚙️ *Bot Settings*\n\n🎯 Referral Required: {{ref_target}}\n👨‍💻 Agent Username: {{agent_username}}\n🆔 Agent ID: {{agent_id}}\n📁 File Name: {{file_name}}\n💬 Support: {{support_username}}\n📦 Withdraw Channel: {{withdraw_channel}}\n📡 Activity Channel: {{activity_channel}}",
+    "buttons": [
+      [
+        { "text": "✏️ Change Referral Target", "next": "change_ref_target" },
+        { "text": "📁 Set File Name", "next": "set_file_name" }
+      ],
+      [
+        { "text": "👨‍💻 Set Agent Username", "next": "set_agent_username" },
+        { "text": "🆔 Set Agent ID", "next": "set_agent_id" }
+      ],
+      [
+        { "text": "💬 Set Support", "next": "set_support" },
+        { "text": "📦 Set Withdraw Channel", "next": "set_withdraw_channel" }
+      ],
+      [{ "text": "👑 Admin Panel", "next": "admin" }]
+    ]
+  },
+
+  "force_join_panel": {
+    "message": "📢 *Force Join Manager*\n\nCurrent channels:\n{{force_channels_list}}\n\nAdd or remove channels below.",
+    "buttons": [
+      [
+        { "text": "➕ Add Channel", "next": "add_channel" },
+        { "text": "➖ Remove Channel", "next": "remove_channel" }
+      ],
+      [{ "text": "👑 Admin Panel", "next": "admin" }]
+    ]
+  },
+
+  "broadcast_panel": {
+    "message": "📢 *Broadcast Message*\n\nSend a message to all {{total_users}} users.\n\nType your message below:",
+    "input": true,
+    "input_next": "broadcast_confirm",
+    "buttons": [
+      [{ "text": "👑 Admin Panel", "next": "admin" }]
+    ]
+  },
+
+  "broadcast_confirm": {
+    "message": "📢 *Confirm Broadcast*\n\nMessage:\n{{input}}\n\nSend to {{total_users}} users?",
+    "buttons": [
+      [
+        { "text": "✅ Confirm Send", "action": "broadcast", "next": "broadcast_done" },
+        { "text": "❌ Cancel", "next": "admin" }
+      ]
+    ]
+  },
+
+  "broadcast_done": {
+    "message": "✅ *Broadcast Sent!*\n\nMessage delivered to all users successfully.",
+    "buttons": [
+      [{ "text": "👑 Admin Panel", "next": "admin" }]
+    ]
+  },
+
+  "activity_panel": {
+    "message": "📡 *Auto Activity Posts*\n\nChannel: {{activity_channel}}\nStatus: {{activity_status}}\n\nAuto posts:\n• New user join\n• New referral\n• File claim / withdraw",
+    "buttons": [
+      [
+        { "text": "✅ Activity ON", "action": "set_activity_on", "next": "activity_panel" },
+        { "text": "❌ Activity OFF", "action": "set_activity_off", "next": "activity_panel" }
+      ],
+      [{ "text": "👑 Admin Panel", "next": "admin" }]
+    ]
+  },
+
+  "customize_ui": {
+    "message": "🎨 *Customize UI*\n\n🏷️ Brand: {{bot_brand}}\n🏡 Title: {{welcome_title}}\n📝 Subtitle: {{welcome_subtitle}}\n🎁 Reward: {{reward_text}}",
+    "buttons": [
+      [
+        { "text": "🏷️ Set Brand Name", "next": "set_brand" },
+        { "text": "🏡 Set Welcome Title", "next": "set_title" }
+      ],
+      [
+        { "text": "📝 Set Subtitle", "next": "set_subtitle" },
+        { "text": "🎁 Set Reward Text", "next": "set_reward" }
+      ],
+      [{ "text": "👑 Admin Panel", "next": "admin" }]
+    ]
+  }
+}
